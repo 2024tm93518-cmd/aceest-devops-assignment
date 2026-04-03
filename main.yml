@@ -1,31 +1,27 @@
-pipeline {
-    agent any
+name: CI Pipeline
 
-    stages {
+on:
+  push:
+    branches: [ main ]
 
-        stage('Clone Repository') {
-            steps {
-                git 'https://github.com/2024tm93518-cmd/aceest-devops-assignment.git'
-            }
-        }
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-        stage('Install Dependencies') {
-            steps {
-                sh 'pip install -r requirements.txt'
-            }
-        }
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
 
-        stage('Run Tests') {
-            steps {
-                sh 'pytest'
-            }
-        }
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.10"
 
-        stage('Build Docker Image') {
-            steps {
-                sh 'docker build -t aceest-fitness .'
-            }
-        }
+    - name: Install Dependencies
+      run: pip install -r requirements.txt
 
-    }
-}
+    - name: Run Tests
+      run: pytest
+
+    - name: Build Docker Image
+      run: docker build -t aceest-fitness .
