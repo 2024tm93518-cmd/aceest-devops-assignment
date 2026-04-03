@@ -5,7 +5,7 @@ pipeline {
 
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/YOUR_USERNAME/aceest-devops-assignment.git'
+                git 'https://github.com/2024tm93518-cmd/aceest-devops-assignment.git'
             }
         }
 
